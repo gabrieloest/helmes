@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +18,7 @@ public class User {
 	@GeneratedValue
 	private long id;
 
-	@NotNull
+	@NotBlank(message = "Name could not be blank!")
 	@Column(name = "name", nullable = false)
 	private String name;
 

@@ -2,9 +2,13 @@ package com.helmes.challenge.controller;
 
 import java.util.HashSet;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -35,8 +39,27 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(User user) {
+	public String save(@Valid User user, BindingResult bindingResult, Model model) {
+
+		validateFields(user, bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("sectors", sectorService.getAllSectors());
+			return "index";
+		}
+
 		userService.createUser(user);
 		return "redirect:/";
+	}
+
+	private void validateFields(User user, BindingResult bindingResult) {
+		if (!user.getSubscription().isTermAgreement()) {
+			bindingResult
+					.addError(new ObjectError("subscription.termAgreement", "You need to accept the agreement term!"));
+		}
+
+		if (user.getSubscription().getSectors().isEmpty()) {
+			bindingResult.addError(new ObjectError("subscription.sectors", "You need to select at least one sector!"));
+		}
 	}
 }
