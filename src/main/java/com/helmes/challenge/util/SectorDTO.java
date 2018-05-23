@@ -7,6 +7,7 @@ public class SectorDTO {
 	private int id;
 	private String description;
 	private SectorDTO father;
+	private int level;
 
 	public int getId() {
 		return id;
@@ -32,6 +33,14 @@ public class SectorDTO {
 		this.father = father;
 	}
 
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	@Override
 	public String toString() {
 		String id = Objects.nonNull(getFather()) ? String.valueOf(getFather().getId()) : null;
@@ -39,5 +48,4 @@ public class SectorDTO {
 				getDescription(), id);
 		return sql;
 	}
-
 }

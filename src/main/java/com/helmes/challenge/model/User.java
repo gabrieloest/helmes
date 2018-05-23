@@ -1,16 +1,12 @@
 package com.helmes.challenge.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,12 +22,12 @@ public class User {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "user_sector", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "sector_id"))
-	private Set<Sector> sectors = new HashSet<>();
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "subscription_id")
+	private Subscription subscription;
 
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(long id) {
@@ -39,19 +35,19 @@ public class User {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Set<Sector> getSectors() {
-		return this.sectors;
+	public Subscription getSubscription() {
+		return subscription;
 	}
 
-	public void setSectors(Set<Sector> sectors) {
-		this.sectors = sectors;
+	public void setSubscription(Subscription subscription) {
+		this.subscription = subscription;
 	}
 
 	@Override
@@ -62,7 +58,7 @@ public class User {
 		if (!(o instanceof User)) {
 			return false;
 		}
-		return this.id == ((User) o).getId();
+		return id == ((User) o).getId();
 	}
 
 	@Override

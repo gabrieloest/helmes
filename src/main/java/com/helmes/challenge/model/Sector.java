@@ -29,7 +29,7 @@ public class Sector {
 	private String description;
 
 	@ManyToMany(mappedBy = "sectors")
-	private Set<User> users = new HashSet<>();
+	private Set<Subscription> subscriptions = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "father_id", nullable = true, insertable = true, updatable = true)
@@ -51,12 +51,12 @@ public class Sector {
 		this.description = description;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<Subscription> getSubscriptions() {
+		return subscriptions;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setSubscriptions(Set<Subscription> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 	public Sector getSectorFather() {
