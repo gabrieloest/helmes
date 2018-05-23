@@ -32,7 +32,7 @@ public class Sector {
 	private Set<User> users = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "father_id", nullable = false, insertable = true, updatable = true)
+	@JoinColumn(name = "father_id", nullable = true, insertable = true, updatable = true)
 	private Sector sectorFather;
 
 	public long getId() {

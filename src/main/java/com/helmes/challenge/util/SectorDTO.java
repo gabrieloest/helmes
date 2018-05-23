@@ -1,4 +1,4 @@
-package com.helmes.challenge;
+package com.helmes.challenge.util;
 
 import java.util.Objects;
 
@@ -35,7 +35,7 @@ public class SectorDTO {
 	@Override
 	public String toString() {
 		String id = Objects.nonNull(getFather()) ? String.valueOf(getFather().getId()) : null;
-		String sql = String.format("INSERT INTO sector (id, description, father_id) VALUES (%s, '%s', %s);", getId(),
+		String sql = String.format("INSERT INTO sectors (id, description, father_id) VALUES (%s, '%s', %s);", getId(),
 				getDescription(), id);
 		return sql;
 	}

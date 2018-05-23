@@ -1,4 +1,4 @@
-package com.helmes.challenge;
+package com.helmes.challenge.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,6 +9,15 @@ import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 
+/**
+ * This is about <code>GenerateDatabase</code>.
+ * {@link com.helmes.challenge.util.GenerateDatabase}
+ *
+ * @author Gabriel Oest
+ *
+ *         This class is responsable to read the index.html and for each
+ *         <option> tag, generate the insert query.
+ */
 public class GenerateDatabase {
 
 	public static void main(String[] args) {
@@ -29,13 +38,13 @@ public class GenerateDatabase {
 			SectorDTO lastSector = null;
 			while ((sCurrentLine = br.readLine()) != null) {
 				if (sCurrentLine.contains("option")) {
-					int levelCount = StringUtils.countMatches(sCurrentLine, "&nbsp;");
+					int levelCount = countLevel(sCurrentLine);
 
-					String id = GenerateDatabase.recoveryId(sCurrentLine);
+					int id = GenerateDatabase.recoveryId(sCurrentLine);
 					String description = GenerateDatabase.recoveryDescription(sCurrentLine);
 
 					SectorDTO sectorDTO = new SectorDTO();
-					sectorDTO.setId(Integer.valueOf(id));
+					sectorDTO.setId(id);
 					sectorDTO.setDescription(description);
 
 					if (Objects.nonNull(father) && levelCount == 0) {
@@ -86,14 +95,18 @@ public class GenerateDatabase {
 		}
 	}
 
+	public static int countLevel(String sCurrentLine) {
+		return StringUtils.countMatches(sCurrentLine, "&nbsp;");
+	}
+
 	private static String recoveryDescription(String sCurrentLine) {
 		String description = StringUtils.substringBetween(sCurrentLine, "\">", "</").replaceAll("&nbsp;", "");
 		return description;
 	}
 
-	private static String recoveryId(String sCurrentLine) {
+	private static int recoveryId(String sCurrentLine) {
 		String id = StringUtils.substringBetween(sCurrentLine, "\"");
-		return id;
+		return Integer.valueOf(id);
 	}
 
 }
