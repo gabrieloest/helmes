@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.helmes.challenge.model.Subscription;
 import com.helmes.challenge.model.User;
 import com.helmes.challenge.service.SectorService;
+import com.helmes.challenge.service.SectorUtil;
 import com.helmes.challenge.service.UserService;
 
 @Controller
@@ -34,7 +35,7 @@ public class LoginController {
 		user.setSubscription(subscription);
 
 		model.addAttribute("user", user);
-		model.addAttribute("sectors", sectorService.getAllSectors());
+		model.addAttribute("sectors", SectorUtil.sortSectors(this.sectorService.getAllSectors()));
 		return "index";
 	}
 
@@ -44,11 +45,11 @@ public class LoginController {
 		validateFields(user, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("sectors", sectorService.getAllSectors());
+			model.addAttribute("sectors", SectorUtil.sortSectors(this.sectorService.getAllSectors()));
 			return "index";
 		}
 
-		userService.createUser(user);
+		this.userService.createUser(user);
 		return "redirect:/";
 	}
 

@@ -15,20 +15,20 @@ import org.apache.commons.lang.StringUtils;
  *
  * @author Gabriel Oest
  *
- *         This class is responsable to read the index.html and for each
- *         <option> tag, generate the insert query.
+ *         This class is responsable to read the index.html and, for each
+ *         <option> tag, generate the insert query in the table sectors.
  */
 public class GenerateDatabase {
 
 	public static void main(String[] args) {
-		generateDTOs();
+		GenerateDatabase.generateDTOs();
 	}
 
 	public static void generateDTOs() {
 		BufferedReader br = null;
 		FileReader fr = null;
 		try {
-			fr = new FileReader("src/main/resources/templates/index.html");
+			fr = new FileReader("index.html");
 			br = new BufferedReader(fr);
 			String sCurrentLine;
 			List<SectorDTO> sectors = new ArrayList<>();
@@ -38,7 +38,7 @@ public class GenerateDatabase {
 			SectorDTO lastSector = null;
 			while ((sCurrentLine = br.readLine()) != null) {
 				if (sCurrentLine.contains("option")) {
-					int levelCount = countLevel(sCurrentLine);
+					int levelCount = GenerateDatabase.countLevel(sCurrentLine);
 
 					int id = GenerateDatabase.recoveryId(sCurrentLine);
 					String description = GenerateDatabase.recoveryDescription(sCurrentLine);

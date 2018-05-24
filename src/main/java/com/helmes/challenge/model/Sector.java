@@ -16,6 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.helmes.challenge.service.SectorUtil;
+
 @Entity
 @Table(name = "sectors")
 public class Sector {
@@ -36,7 +40,7 @@ public class Sector {
 	private Sector sectorFather;
 
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
@@ -44,7 +48,17 @@ public class Sector {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
+	}
+
+	public String getDescriptionLevel() {
+		String whitespace = "&nbsp;";
+		int sectorLevel = SectorUtil.getSectorLevel(this, 0);
+
+		String desc = StringUtils.repeat(whitespace, sectorLevel) + this.description;
+		System.out.println(desc);
+
+		return desc;
 	}
 
 	public void setDescription(String description) {
@@ -52,7 +66,7 @@ public class Sector {
 	}
 
 	public Set<Subscription> getSubscriptions() {
-		return subscriptions;
+		return this.subscriptions;
 	}
 
 	public void setSubscriptions(Set<Subscription> subscriptions) {
@@ -60,7 +74,7 @@ public class Sector {
 	}
 
 	public Sector getSectorFather() {
-		return sectorFather;
+		return this.sectorFather;
 	}
 
 	public void setSectorFather(Sector sectorFather) {
@@ -76,12 +90,12 @@ public class Sector {
 			return false;
 		}
 		Sector tag = (Sector) o;
-		return Objects.equals(description, tag.description);
+		return Objects.equals(this.id, tag.id);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description);
+		return Objects.hash(this.description) + (int) this.id;
 	}
 
 }
