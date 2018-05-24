@@ -45,8 +45,6 @@ public class SectorUtil {
 			level = 4;
 			level += SectorUtil.getSectorLevel(sector.getSectorFather(), level);
 		}
-
-		System.out.println(level + " " + sector.getDescription());
 		return level;
 	}
 

@@ -18,7 +18,7 @@
 		</a>
 	</nav>
 	<div class="container" style="padding-top: 25px;">
-		<form th:object="${user}" action="index.html" th:action="@{/save}" method="post">
+		<form th:object="${user}" action="index.html" th:action="@{/index}" method="post">
 			<div th:if="${#fields.hasAnyErrors()}">
 				<div th:each="err : ${#fields.allErrors()}" class="alert alert-danger alert-dismissible fade show" role="alert">
 					<p th:text="${err}"></p>
@@ -51,15 +51,5 @@
 			<input type="submit" value="Save" class="btn btn-primary">
 		</form>
 	</div>
-
-	<script>
-	  $(document).ready(function() {
-	
-		$('#name').blur(function() {
-			
-		});			
-					
-	  });
-  </script>
 </body>
 </html>

@@ -40,7 +40,7 @@ public class Sector {
 	private Sector sectorFather;
 
 	public long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(long id) {
@@ -48,17 +48,14 @@ public class Sector {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public String getDescriptionLevel() {
 		String whitespace = "&nbsp;";
 		int sectorLevel = SectorUtil.getSectorLevel(this, 0);
 
-		String desc = StringUtils.repeat(whitespace, sectorLevel) + this.description;
-		System.out.println(desc);
-
-		return desc;
+		return StringUtils.repeat(whitespace, sectorLevel) + description;
 	}
 
 	public void setDescription(String description) {
@@ -66,7 +63,7 @@ public class Sector {
 	}
 
 	public Set<Subscription> getSubscriptions() {
-		return this.subscriptions;
+		return subscriptions;
 	}
 
 	public void setSubscriptions(Set<Subscription> subscriptions) {
@@ -74,7 +71,7 @@ public class Sector {
 	}
 
 	public Sector getSectorFather() {
-		return this.sectorFather;
+		return sectorFather;
 	}
 
 	public void setSectorFather(Sector sectorFather) {
@@ -90,12 +87,12 @@ public class Sector {
 			return false;
 		}
 		Sector tag = (Sector) o;
-		return Objects.equals(this.id, tag.id);
+		return Objects.equals(id, tag.id);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.description) + (int) this.id;
+		return Objects.hash(description) + (int) id;
 	}
 
 }
