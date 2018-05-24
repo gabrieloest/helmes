@@ -1,0 +1,166 @@
+﻿CREATE DATABASE helmes;
+
+USE helmes;
+
+-- Table: public.users
+
+-- DROP TABLE public.users;
+
+CREATE TABLE public.users
+(
+  id bigint NOT NULL,
+  name character varying(255) NOT NULL,
+  subscription_id bigint,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT fkfwx079xww5uyfbpi9u8gwam34 FOREIGN KEY (subscription_id)
+      REFERENCES public.subscriptions (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.users
+  OWNER TO postgres;
+
+
+-- Table: public.sectors
+
+-- DROP TABLE public.sectors;
+
+CREATE TABLE public.sectors
+(
+  id bigint NOT NULL,
+  description character varying(255) NOT NULL,
+  father_id bigint,
+  CONSTRAINT sectors_pkey PRIMARY KEY (id),
+  CONSTRAINT fk998tkre9k23s6bxbawlra1evl FOREIGN KEY (father_id)
+      REFERENCES public.sectors (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.sectors
+  OWNER TO postgres;
+
+
+ -- Table: public.subscriptions
+
+-- DROP TABLE public.subscriptions;
+
+CREATE TABLE public.subscriptions
+(
+  id bigint NOT NULL,
+  term_agreement boolean NOT NULL,
+  CONSTRAINT subscriptions_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.subscriptions
+  OWNER TO postgres;
+
+
+-- Table: public.subscription_sector
+
+-- DROP TABLE public.subscription_sector;
+
+CREATE TABLE public.subscription_sector
+(
+  subscription_id bigint NOT NULL,
+  sector_id bigint NOT NULL,
+  CONSTRAINT subscription_sector_pkey PRIMARY KEY (subscription_id, sector_id),
+  CONSTRAINT fkf3qw22imqwe4ouap0fyyanbmk FOREIGN KEY (sector_id)
+      REFERENCES public.sectors (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fkj71p0e45fo70imy7c7s00qxom FOREIGN KEY (subscription_id)
+      REFERENCES public.subscriptions (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.subscription_sector
+  OWNER TO postgres;
+
+
+INSERT INTO sectors (id, description, father_id) VALUES (1, 'Manufacturing', null);
+INSERT INTO sectors (id, description, father_id) VALUES (19, 'Construction materials', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (18, 'Electronics and Optics', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (6, 'Food and Beverage', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (342, 'Bakery &amp; confectionery products', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (43, 'Beverages', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (42, 'Fish &amp; fish products', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (40, 'Meat &amp; meat products', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (39, 'Milk &amp; dairy products', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (437, 'Other', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (378, 'Sweets &amp; snack food', 6);
+INSERT INTO sectors (id, description, father_id) VALUES (13, 'Furniture', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (389, 'Bathroom/sauna', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (385, 'Bedroom', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (390, 'Children’s room', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (98, 'Kitchen', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (101, 'Living room', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (392, 'Office', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (394, 'Other (Furniture)', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (341, 'Outdoor', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (99, 'Project furniture', 13);
+INSERT INTO sectors (id, description, father_id) VALUES (12, 'Machinery', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (94, 'Machinery components', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (91, 'Machinery equipment/tools', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (224, 'Manufacture of machinery', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (97, 'Maritime', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (271, 'Aluminium and steel workboats', 97);
+INSERT INTO sectors (id, description, father_id) VALUES (269, 'Boat/Yacht building', 97);
+INSERT INTO sectors (id, description, father_id) VALUES (230, 'Ship repair and conversion', 97);
+INSERT INTO sectors (id, description, father_id) VALUES (93, 'Metal structures', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (508, 'Other', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (227, 'Repair and maintenance service', 12);
+INSERT INTO sectors (id, description, father_id) VALUES (11, 'Metalworking', 1);
+INSERT INTO sectors (id, description, father_id) VALUES (67, 'Construction of metal structures', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (263, 'Houses and buildings', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (267, 'Metal products', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (542, 'Metal works', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (75, 'CNC-machining', 542);
+INSERT INTO sectors (id, description, father_id) VALUES (62, 'Forgings, Fasteners', 542);
+INSERT INTO sectors (id, description, father_id) VALUES (69, 'Gas, Plasma, Laser cutting', 542);
+INSERT INTO sectors (id, description, father_id) VALUES (66, 'MIG, TIG, Aluminum welding', 542);
+INSERT INTO sectors (id, description, father_id) VALUES (9, 'Plastic and Rubber', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (54, 'Packaging', 9);
+INSERT INTO sectors (id, description, father_id) VALUES (556, 'Plastic goods', 9);
+INSERT INTO sectors (id, description, father_id) VALUES (559, 'Plastic processing technology', 9);
+INSERT INTO sectors (id, description, father_id) VALUES (55, 'Blowing', 559);
+INSERT INTO sectors (id, description, father_id) VALUES (57, 'Moulding', 559);
+INSERT INTO sectors (id, description, father_id) VALUES (53, 'Plastics welding and processing', 559);
+INSERT INTO sectors (id, description, father_id) VALUES (560, 'Plastic profiles', 9);
+INSERT INTO sectors (id, description, father_id) VALUES (5, 'Printing', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (148, 'Advertising', 5);
+INSERT INTO sectors (id, description, father_id) VALUES (150, 'Book/Periodicals printing', 5);
+INSERT INTO sectors (id, description, father_id) VALUES (145, 'Labelling and packaging printing', 5);
+INSERT INTO sectors (id, description, father_id) VALUES (7, 'Textile and Clothing', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (44, 'Clothing', 7);
+INSERT INTO sectors (id, description, father_id) VALUES (45, 'Textile', 7);
+INSERT INTO sectors (id, description, father_id) VALUES (8, 'Wood', 11);
+INSERT INTO sectors (id, description, father_id) VALUES (337, 'Other (Wood)', 8);
+INSERT INTO sectors (id, description, father_id) VALUES (51, 'Wooden building materials', 8);
+INSERT INTO sectors (id, description, father_id) VALUES (47, 'Wooden houses', 8);
+INSERT INTO sectors (id, description, father_id) VALUES (3, 'Other', null);
+INSERT INTO sectors (id, description, father_id) VALUES (37, 'Creative industries', 3);
+INSERT INTO sectors (id, description, father_id) VALUES (29, 'Energy technology', 3);
+INSERT INTO sectors (id, description, father_id) VALUES (33, 'Environment', 3);
+INSERT INTO sectors (id, description, father_id) VALUES (2, 'Service', null);
+INSERT INTO sectors (id, description, father_id) VALUES (25, 'Business services', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (35, 'Engineering', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (28, 'Information Technology and Telecommunications', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (581, 'Data processing, Web portals, E-marketing', 28);
+INSERT INTO sectors (id, description, father_id) VALUES (576, 'Programming, Consultancy', 28);
+INSERT INTO sectors (id, description, father_id) VALUES (121, 'Software, Hardware', 28);
+INSERT INTO sectors (id, description, father_id) VALUES (122, 'Telecommunications', 28);
+INSERT INTO sectors (id, description, father_id) VALUES (22, 'Tourism', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (141, 'Translation services', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (21, 'Transport and Logistics', 2);
+INSERT INTO sectors (id, description, father_id) VALUES (111, 'Air', 21);
+INSERT INTO sectors (id, description, father_id) VALUES (114, 'Rail', 21);
+INSERT INTO sectors (id, description, father_id) VALUES (112, 'Road', 21);
+INSERT INTO sectors (id, description, father_id) VALUES (113, 'Water', 21);
+

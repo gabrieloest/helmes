@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.helmes.challenge.model.Subscription;
 import com.helmes.challenge.model.User;
 import com.helmes.challenge.service.SectorService;
-import com.helmes.challenge.service.SectorUtil;
 import com.helmes.challenge.service.UserService;
+import com.helmes.challenge.util.SectorUtil;
 
 @Controller
-public class LoginController {
+public class SubscriptionController {
 
 	@Autowired
 	private UserService userService;
@@ -49,7 +49,8 @@ public class LoginController {
 			return "index";
 		}
 
-		this.userService.createUser(user);
+		User createdUser = this.userService.createUser(user);
+		model.addAttribute("user", createdUser);
 		return "redirect:/";
 	}
 

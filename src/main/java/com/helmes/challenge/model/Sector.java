@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.helmes.challenge.service.SectorUtil;
+import com.helmes.challenge.util.SectorUtil;
 
 @Entity
 @Table(name = "sectors")

@@ -1,4 +1,4 @@
-package com.helmes.challenge.service;
+package com.helmes.challenge.util;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,12 +18,12 @@ public class SectorUtil {
 		List<Sector> firstLevelSectors = SectorUtil.sectors.stream().filter(it -> Objects.isNull(it.getSectorFather()))
 				.collect(Collectors.toList());
 
-		SectorUtil.createSectorVO(firstLevelSectors, sortedSectors);
+		SectorUtil.fillSortedSectors(firstLevelSectors, sortedSectors);
 
 		return sortedSectors;
 	}
 
-	private static void createSectorVO(List<Sector> levelSectors, Set<Sector> sortedSectors) {
+	private static void fillSortedSectors(List<Sector> levelSectors, Set<Sector> sortedSectors) {
 		levelSectors.forEach(it -> {
 			List<Sector> nodes = SectorUtil.sectors.stream().filter(sector -> {
 				if (Objects.nonNull(sector.getSectorFather())) {
@@ -35,7 +35,7 @@ public class SectorUtil {
 			sortedSectors.add(it);
 
 			if (!nodes.isEmpty()) {
-				SectorUtil.createSectorVO(nodes, sortedSectors);
+				SectorUtil.fillSortedSectors(nodes, sortedSectors);
 			}
 		});
 	}
