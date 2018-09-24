@@ -10,7 +10,7 @@ public interface UserService {
 
 	Optional<User> getUser(Long id);
 
-	User editUser(User user);
+	User editUser(Long id, User user);
 
 	void deleteUser(User user);
 

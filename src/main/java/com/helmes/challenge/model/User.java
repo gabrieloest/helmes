@@ -1,5 +1,8 @@
 package com.helmes.challenge.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.validation.ObjectError;
 
 @Entity
 @Table(name = "users")
@@ -24,6 +30,7 @@ public class User {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "subscription_id")
+	@NotNull(message = "Subscription can not be null!")
 	private Subscription subscription;
 
 	public long getId() {
@@ -64,6 +71,20 @@ public class User {
 	@Override
 	public int hashCode() {
 		return 31;
+	}
+
+	public List<ObjectError> validate() {
+		List<ObjectError> erros = new ArrayList<>();
+
+		if (subscription.getSectors().isEmpty()) {
+			erros.add(new ObjectError("subscription.sectors", "You need to select at least one sector!"));
+		}
+
+		if (!subscription.isTermAgreement()) {
+			erros.add(new ObjectError("subscription.termAgreement", "You need to accept the agreement term!"));
+		}
+
+		return erros;
 	}
 
 }

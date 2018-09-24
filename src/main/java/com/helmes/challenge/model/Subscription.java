@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "subscriptions")
@@ -26,9 +27,10 @@ public class Subscription {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "subscription_sector", joinColumns = @JoinColumn(name = "subscription_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "sector_id", referencedColumnName = "id"))
+	@NotEmpty(message = "You need to choose at least one sector!")
 	private Set<Sector> sectors;
 
-	@AssertTrue
+	@AssertTrue(message = "You need to accept the agreement term!")
 	private boolean termAgreement;
 
 	public long getId() {

@@ -3,6 +3,8 @@ package com.helmes.challenge.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User editUser(User user) {
+	@Transactional
+	public User editUser(Long id, User user) {
+		userRepository.findById(id);
 		return this.userRepository.save(user);
 	}
 
